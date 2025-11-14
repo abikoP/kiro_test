@@ -1,0 +1,23 @@
+server:
+  port: 3000
+  host: 0.0.0.0
+
+database:
+  uri: sqlite://db.sqlite?mode=rwc
+  enable_logging: false
+  auto_migrate: false
+  min_connections: 1
+  max_connections: 10
+  connect_timeout: 500
+  idle_timeout: 500
+
+auth:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration: 86400
+
+logger:
+  enable: true
+  level: info
+  format: json
+  override_filter: null

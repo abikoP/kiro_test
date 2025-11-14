@@ -1,0 +1,67 @@
+{% extends "layout/base.html" %}
+
+{% block title %}404 - ページが見つかりません{% endblock %}
+
+{% block header_title %}404 - ページが見つかりません{% endblock %}
+{% block header_subtitle %}お探しのページは存在しません{% endblock %}
+
+{% block navigation %}{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .error-container {
+        text-align: center;
+        padding: 3rem 1rem;
+    }
+    
+    .error-icon {
+        font-size: 6rem;
+        margin-bottom: 1rem;
+    }
+    
+    .error-code {
+        font-size: 4rem;
+        font-weight: 700;
+        color: #95a5a6;
+        margin: 0;
+    }
+    
+    .error-message {
+        font-size: 1.5rem;
+        color: #555;
+        margin: 1rem 0 2rem 0;
+    }
+    
+    .error-description {
+        color: #666;
+        margin-bottom: 2rem;
+        line-height: 1.8;
+    }
+    
+    .error-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="error-container">
+        <div class="error-icon">🔍</div>
+        <h1 class="error-code">404</h1>
+        <p class="error-message">ページが見つかりません</p>
+        <div class="error-description">
+            <p>お探しのページは存在しないか、移動または削除された可能性があります。</p>
+            <p>URLが正しいかご確認いただくか、以下のリンクから目的のページにアクセスしてください。</p>
+        </div>
+        <div class="error-actions">
+            <a href="/conf" class="btn btn-primary">公開ページへ</a>
+            <a href="/admin" class="btn btn-secondary">ダッシュボードへ</a>
+            <a href="javascript:history.back()" class="btn btn-secondary">前のページに戻る</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

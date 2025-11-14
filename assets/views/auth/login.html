@@ -1,0 +1,88 @@
+{% extends "layout/base.html" %}
+
+{% block title %}ログイン - Telegraf設定管理{% endblock %}
+
+{% block header_title %}ログイン{% endblock %}
+{% block header_subtitle %}管理画面にアクセスするにはログインしてください{% endblock %}
+
+{% block navigation %}{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .login-container {
+        max-width: 450px;
+        margin: 3rem auto;
+    }
+    
+    .login-card {
+        background: white;
+        padding: 3rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    
+    .login-card h2 {
+        margin-top: 0;
+        text-align: center;
+        color: #667eea;
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+    }
+    
+    .login-icon {
+        text-align: center;
+        font-size: 4rem;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-icon">🔐</div>
+        <h2>管理者ログイン</h2>
+        
+        {% if error %}
+        <div class="alert alert-error">
+            {{ error }}
+        </div>
+        {% endif %}
+        
+        <form method="POST" action="/auth/login">
+            <div class="form-group">
+                <label for="username">ユーザー名</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    class="form-control" 
+                    required 
+                    autofocus
+                    placeholder="ユーザー名を入力"
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="password">パスワード</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    class="form-control" 
+                    required
+                    placeholder="パスワードを入力"
+                >
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem;">
+                ログイン
+            </button>
+        </form>
+        
+        <div class="text-center mt-3">
+            <a href="/conf" style="color: #667eea; text-decoration: none;">公開ページに戻る</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "layout/base.html" %}
+
+{% block title %}500 - サーバーエラー{% endblock %}
+
+{% block header_title %}500 - サーバーエラー{% endblock %}
+{% block header_subtitle %}予期しないエラーが発生しました{% endblock %}
+
+{% block navigation %}{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .error-container {
+        text-align: center;
+        padding: 3rem 1rem;
+    }
+    
+    .error-icon {
+        font-size: 6rem;
+        margin-bottom: 1rem;
+    }
+    
+    .error-code {
+        font-size: 4rem;
+        font-weight: 700;
+        color: #f39c12;
+        margin: 0;
+    }
+    
+    .error-message {
+        font-size: 1.5rem;
+        color: #555;
+        margin: 1rem 0 2rem 0;
+    }
+    
+    .error-description {
+        color: #666;
+        margin-bottom: 2rem;
+        line-height: 1.8;
+    }
+    
+    .error-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .error-details {
+        background: #f8f9fa;
+        border-left: 4px solid #f39c12;
+        padding: 1rem;
+        margin: 2rem auto;
+        max-width: 600px;
+        text-align: left;
+    }
+    
+    .error-details pre {
+        margin: 0.5rem 0 0 0;
+        overflow-x: auto;
+        font-size: 0.85rem;
+        color: #333;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="error-container">
+        <div class="error-icon">⚠️</div>
+        <h1 class="error-code">500</h1>
+        <p class="error-message">サーバーエラーが発生しました</p>
+        <div class="error-description">
+            <p>申し訳ございません。サーバー側で予期しないエラーが発生しました。</p>
+            <p>しばらく時間をおいてから再度お試しください。</p>
+            <p>問題が解決しない場合は、システム管理者にお問い合わせください。</p>
+        </div>
+        
+        {% if error_message %}
+        <div class="error-details">
+            <strong>エラー詳細：</strong>
+            <pre>{{ error_message }}</pre>
+        </div>
+        {% endif %}
+        
+        <div class="error-actions">
+            <a href="javascript:history.back()" class="btn btn-secondary">前のページに戻る</a>
+            <a href="/conf" class="btn btn-primary">公開ページへ</a>
+            <a href="/admin" class="btn btn-secondary">ダッシュボードへ</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+[package]
+name = "migration"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+sea-orm-migration = { version = "1", features = ["runtime-tokio-rustls", "sqlx-sqlite"] }
+async-trait = "0.1"
+
+[lib]
+name = "migration"
+path = "src/lib.rs"

@@ -1,0 +1,160 @@
+{% extends "layout/admin.html" %}
+
+{% block title %}URL編集 - Telegraf設定管理{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .url-list {
+        list-style: none;
+        padding: 0;
+        margin: 1.5rem 0;
+    }
+    
+    .url-item {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem;
+        background: #f8f9fa;
+        border-radius: 5px;
+        margin-bottom: 0.5rem;
+        transition: background 0.3s;
+    }
+    
+    .url-item:hover {
+        background: #e9ecef;
+    }
+    
+    .url-item input[type="checkbox"] {
+        margin-right: 1rem;
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+    
+    .url-item label {
+        flex: 1;
+        cursor: pointer;
+        margin: 0;
+        font-family: monospace;
+        font-size: 0.95rem;
+    }
+    
+    .url-item.marked-for-deletion {
+        background: #f8d7da;
+        text-decoration: line-through;
+        opacity: 0.7;
+    }
+    
+    .section-divider {
+        border-top: 2px solid #e0e0e0;
+        margin: 2rem 0;
+        padding-top: 2rem;
+    }
+    
+    .help-text {
+        color: #666;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+    }
+    
+    .button-group {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>URL編集</h2>
+    
+    {% if success %}
+    <div class="alert alert-success">
+        {{ success }}
+    </div>
+    {% endif %}
+    
+    {% if error %}
+    <div class="alert alert-error">
+        {{ error }}
+    </div>
+    {% endif %}
+    
+    {% if errors %}
+    <div class="alert alert-error">
+        <strong>以下のエラーが発生しました：</strong>
+        <ul style="margin: 0.5rem 0 0 1.5rem;">
+            {% for err in errors %}
+            <li>{{ err }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    
+    <form method="POST" action="/admin/edit">
+        <!-- 既存URLの削除 -->
+        {% if urls and urls | length > 0 %}
+        <div>
+            <h3 style="color: #555; font-size: 1.2rem; margin-bottom: 1rem;">既存のURL</h3>
+            <p class="help-text">削除したいURLにチェックを入れてください</p>
+            
+            <ul class="url-list">
+                {% for url in urls %}
+                <li class="url-item">
+                    <input 
+                        type="checkbox" 
+                        name="delete_urls" 
+                        value="{{ url }}" 
+                        id="url_{{ loop.index }}"
+                        onchange="this.parentElement.classList.toggle('marked-for-deletion', this.checked)"
+                    >
+                    <label for="url_{{ loop.index }}">{{ url }}</label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="section-divider"></div>
+        {% endif %}
+        
+        <!-- 新規URL追加 -->
+        <div>
+            <h3 style="color: #555; font-size: 1.2rem; margin-bottom: 1rem;">新しいURLを追加</h3>
+            <p class="help-text">1行に1つのURLを入力してください（HTTP/HTTPSのみ対応）</p>
+            
+            <div class="form-group">
+                <textarea 
+                    name="new_urls" 
+                    class="form-control" 
+                    rows="8" 
+                    placeholder="https://example.com&#10;https://api.example.com/health&#10;https://another-site.com"
+                >{{ new_urls }}</textarea>
+            </div>
+        </div>
+        
+        <!-- ボタン -->
+        <div class="button-group">
+            <button type="submit" class="btn btn-success">保存</button>
+            <a href="/admin/list" class="btn btn-secondary">キャンセル</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    // フォーム送信前の確認
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const deleteCheckboxes = document.querySelectorAll('input[name="delete_urls"]:checked');
+        const newUrls = document.querySelector('textarea[name="new_urls"]').value.trim();
+        
+        if (deleteCheckboxes.length > 0 && !newUrls) {
+            const totalUrls = document.querySelectorAll('input[name="delete_urls"]').length;
+            if (deleteCheckboxes.length === totalUrls) {
+                if (!confirm('すべてのURLを削除しようとしています。本当によろしいですか？')) {
+                    e.preventDefault();
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

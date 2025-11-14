@@ -1,0 +1,66 @@
+{% extends "layout/base.html" %}
+
+{% block title %}401 - 認証が必要です{% endblock %}
+
+{% block header_title %}401 - 認証が必要です{% endblock %}
+{% block header_subtitle %}このページにアクセスするにはログインが必要です{% endblock %}
+
+{% block navigation %}{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .error-container {
+        text-align: center;
+        padding: 3rem 1rem;
+    }
+    
+    .error-icon {
+        font-size: 6rem;
+        margin-bottom: 1rem;
+    }
+    
+    .error-code {
+        font-size: 4rem;
+        font-weight: 700;
+        color: #667eea;
+        margin: 0;
+    }
+    
+    .error-message {
+        font-size: 1.5rem;
+        color: #555;
+        margin: 1rem 0 2rem 0;
+    }
+    
+    .error-description {
+        color: #666;
+        margin-bottom: 2rem;
+        line-height: 1.8;
+    }
+    
+    .error-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="error-container">
+        <div class="error-icon">🔒</div>
+        <h1 class="error-code">401</h1>
+        <p class="error-message">認証が必要です</p>
+        <div class="error-description">
+            <p>このページにアクセスするには、ログインが必要です。</p>
+            <p>管理画面の機能を利用するには、有効なユーザー名とパスワードでログインしてください。</p>
+        </div>
+        <div class="error-actions">
+            <a href="/auth/login" class="btn btn-primary">ログインページへ</a>
+            <a href="/conf" class="btn btn-secondary">公開ページへ</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends "layout/admin.html" %}
+
+{% block title %}管理画面 - Telegraf設定管理{% endblock %}
+
+{% block extra_styles %}
+<style>
+    .dashboard-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin: 1.5rem 0;
+    }
+    
+    .stat-box {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 2rem;
+        border-radius: 8px;
+        color: white;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        transition: transform 0.3s;
+    }
+    
+    .stat-box:hover {
+        transform: translateY(-5px);
+    }
+    
+    .stat-box h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 0.95rem;
+        font-weight: 500;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .stat-box .value {
+        font-size: 3rem;
+        font-weight: 700;
+        margin: 0.5rem 0;
+    }
+    
+    .stat-box .label {
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+    
+    .quick-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-top: 1.5rem;
+    }
+    
+    .quick-actions a {
+        flex: 1;
+        min-width: 200px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>ダッシュボード</h2>
+    <div class="dashboard-stats">
+        <div class="stat-box">
+            <h3>監視中のURL</h3>
+            <div class="value">{{ url_count }}</div>
+            <div class="label">アクティブな監視対象</div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>管理画面へようこそ</h2>
+    <p>このシステムでは、Telegrafの設定ファイル内のHTTP監視URLを管理できます。</p>
+    <p>以下の機能をご利用いただけます：</p>
+    <ul>
+        <li>現在監視中のURL一覧の確認</li>
+        <li>新しい監視URLの追加</li>
+        <li>既存URLの削除</li>
+        <li>設定ファイルへの即時反映</li>
+    </ul>
+    <div class="quick-actions">
+        <a href="/admin/list" class="btn btn-primary">URL一覧を見る</a>
+        <a href="/admin/edit" class="btn btn-success">URLを編集する</a>
+        <a href="/conf" class="btn btn-secondary">公開ページを見る</a>
+    </div>
+</div>
+{% endblock %}

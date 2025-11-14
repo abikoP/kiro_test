@@ -1,0 +1,18 @@
+{% extends "layout/base.html" %}
+
+{% block navigation %}
+<nav class="site-nav">
+    <div class="nav-container">
+        <ul class="nav-links">
+            <li><a href="/admin" {% if current_page == "dashboard" %}class="active"{% endif %}>ダッシュボード</a></li>
+            <li><a href="/admin/list" {% if current_page == "list" %}class="active"{% endif %}>URL一覧</a></li>
+            <li><a href="/admin/edit" {% if current_page == "edit" %}class="active"{% endif %}>URL編集</a></li>
+        </ul>
+        <div class="nav-actions">
+            <form method="POST" action="/auth/logout" style="margin: 0;">
+                <button type="submit" class="btn btn-danger">ログアウト</button>
+            </form>
+        </div>
+    </div>
+</nav>
+{% endblock %}

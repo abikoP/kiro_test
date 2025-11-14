@@ -1,0 +1,36 @@
+{% extends "layout/base.html" %}
+
+{% block title %}Telegraf設定情報{% endblock %}
+
+{% block header_title %}Telegraf設定情報{% endblock %}
+{% block header_subtitle %}現在監視中のURL一覧{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>監視中のURL一覧</h2>
+    {% if urls %}
+    <table>
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>URL</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for url in urls %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ url }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="text-center" style="color: #999; padding: 2rem;">監視中のURLはありません</p>
+    {% endif %}
+</div>
+
+<div class="text-center mt-3">
+    <a href="/admin" class="btn btn-primary">管理画面へ</a>
+</div>
+{% endblock %}
