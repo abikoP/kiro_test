@@ -8,6 +8,10 @@ description = "Telegraf設定ファイル管理システム"
 name = "seed_user"
 path = "src/bin/seed_user.rs"
 
+[[bin]]
+name = "test_password"
+path = "src/bin/test_password.rs"
+
 [dependencies]
 loco-rs = { version = "0.13", features = ["with-db", "auth_jwt", "cli"] }
 sea-orm = { version = "1", features = ["sqlx-sqlite", "runtime-tokio-rustls", "macros"] }
