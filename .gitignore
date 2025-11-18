@@ -4,3 +4,4 @@
 *.sqlite-wal
 .env
 .DS_Store
+telegraf.conf
