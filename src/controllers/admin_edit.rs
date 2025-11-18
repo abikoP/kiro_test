@@ -12,12 +12,40 @@ use crate::services::{config_service::ConfigService, url_validation_service::Url
 #[derive(Debug, Deserialize)]
 pub struct UrlUpdateForm {
     /// 削除対象のURLインデックス（チェックボックスで選択）
-    #[serde(default)]
+    #[serde(default, deserialize_with = "deserialize_indices")]
     pub delete_indices: Vec<usize>,
     
     /// 新規追加するURL（改行区切り）
     #[serde(default)]
     pub new_urls: String,
+}
+
+/// 単一の値または配列を受け取るカスタムデシリアライザ
+fn deserialize_indices<'de, D>(deserializer: D) -> Result<Vec<usize>, D::Error>
+where
+    D: serde::Deserializer<'de>,
+{
+    use serde::de::{self, Deserialize};
+    
+    #[derive(Deserialize)]
+    #[serde(untagged)]
+    enum StringOrVec {
+        String(String),
+        Vec(Vec<String>),
+    }
+    
+    match StringOrVec::deserialize(deserializer)? {
+        StringOrVec::String(s) => {
+            s.parse::<usize>()
+                .map(|v| vec![v])
+                .map_err(de::Error::custom)
+        }
+        StringOrVec::Vec(v) => {
+            v.into_iter()
+                .map(|s| s.parse::<usize>().map_err(de::Error::custom))
+                .collect()
+        }
+    }
 }
 
 /// URL編集フォーム表示
