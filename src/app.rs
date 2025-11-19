@@ -11,7 +11,7 @@ use loco_rs::{
 use migration::Migrator;
 use sea_orm::DatabaseConnection;
 
-use crate::controllers::{admin, admin_edit, admin_list, auth, config};
+use crate::controllers::{admin, admin_edit, admin_list, auth, config, telegraf};
 use crate::middleware::auth::require_auth;
 
 pub struct App;
@@ -51,6 +51,7 @@ impl Hooks for App {
             .add("/admin/list", get(admin_list::index))
             .add("/admin/edit", get(admin_edit::edit))
             .add("/admin/edit", post(admin_edit::update))
+            .add("/admin/telegraf/restart", post(telegraf::restart))
             .add("/auth/logout", post(auth::logout))
             .layer(axum::middleware::from_fn_with_state(
                 ctx.clone(),

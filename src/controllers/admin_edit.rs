@@ -316,6 +316,22 @@ fn generate_edit_page_html(url_list_html: &str, error_message: &str, is_error: b
             margin-bottom: 1rem;
             border: 1px solid #c3e6cb;
         }}
+        .restart-form {{
+            display: inline;
+            margin-right: 0.5rem;
+        }}
+        .restart-btn {{
+            background: #f39c12;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }}
+        .restart-btn:hover {{
+            background: #e67e22;
+        }}
         .logout-form {{
             display: inline;
         }}
@@ -353,6 +369,9 @@ fn generate_edit_page_html(url_list_html: &str, error_message: &str, is_error: b
         <a href="/admin">ダッシュボード</a>
         <a href="/admin/list">URL一覧</a>
         <a href="/admin/edit">URL編集</a>
+        <form method="POST" action="/admin/telegraf/restart" class="restart-form" onsubmit="return confirm('Telegrafコンテナを再起動しますか？');">
+            <button type="submit" class="restart-btn">Telegraf再起動</button>
+        </form>
         <form method="POST" action="/auth/logout" class="logout-form">
             <button type="submit" class="logout-btn">ログアウト</button>
         </form>
